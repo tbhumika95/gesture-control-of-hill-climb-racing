@@ -17,7 +17,17 @@ while True :
 
         for hand_landmarks in results.multi_hand_landmarks:
 
-            # Draw landmarks and connections
+            for id, landmark in enumerate(hand_landmarks.landmark):
+
+                h, w, c = frame.shape
+
+                cx = int(landmark.x * w)
+                cy = int(landmark.y * h)
+
+                print(id, cx, cy)
+
+
+            
             mp_draw.draw_landmarks(
                 frame,
                 hand_landmarks,
