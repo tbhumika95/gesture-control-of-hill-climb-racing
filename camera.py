@@ -1,5 +1,7 @@
 import cv2
 import mediapipe as mp
+import keyboard
+
 
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands()
@@ -7,6 +9,8 @@ hands = mp_hands.Hands()
 mp_draw = mp.solutions.drawing_utils
 
 cap = cv2.VideoCapture(0)
+
+
 
 up_count = 0
 down_count = 0
@@ -39,8 +43,7 @@ while True:
                 hand_landmarks,
                 mp_hands.HAND_CONNECTIONS
             )
-
-            if len(finger_points) >= 9:
+            if len(finger_points) != 0:
 
                 index_tip_y = finger_points[8][2]
 
@@ -68,6 +71,10 @@ while True:
                         3
                     )
 
+                    keyboard.release("left")
+                    keyboard.press("right")
+                        
+
                 if down_count > 5:
 
                     cv2.putText(
@@ -80,10 +87,16 @@ while True:
                         3
                     )
 
-    cv2.imshow("Camera", frame)
+                   
+                    keyboard.release("right")
+                    keyboard.press("left")
+                        
+
+    cv2.imshow("Hill Climb Gesture Control", frame)
 
     if cv2.waitKey(1) == 27:
         break
 
 cap.release()
+
 cv2.destroyAllWindows()
